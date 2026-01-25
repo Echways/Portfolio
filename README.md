@@ -1,76 +1,129 @@
 # Portfolio
 
-Небольшой Django-сайт-портфолио: главная страница с достижениями, лента новостей, проекты и детальные страницы для каждого материала.  
-Админка позволяет удобно добавлять новости, проекты и достижения без правки кода.
+Сайт‑портфолио: главная страница с командой и достижениями, лента новостей, проекты и детальные страницы для каждого материала. Контент управляется через админку.
 
 ## Стек
 
-- **Python** 3.10
-- **Django** 4.0.x
-- **SQLite**
-- **Pillow** — работа с изображениями
-- HTML/CSS/JS, статические ресурсы в `static/`
+- Python 3.10+
+- Django 5.x
+- PostgreSQL
+- Pillow
+- HTML/CSS/JS, статика в `static/`, медиа в `media/`
 
 ## Быстрый старт
 
-### 1. Клонирование репозитория
+### 1. Клонирование
 
 ```bash
 git clone git@github.com:Echways/Portfolio.git
 cd Portfolio
 ```
 
-### 2. Создание виртуального окружения
+### 2. Окружение и зависимости
 
-```bash
-python3 -m venv venv
-source venv/bin/activate      # Linux/macOS
-# или
-venv\Scripts\activate         # Windows
-```
-
-### 3. Установка зависимостей
+Вариант через pipenv:
 
 ```bash
 pip install pipenv
-pipenv install
-pipenv install "django==4.0.4"
-pipenv install pillow
+pipenv install --dev
 pipenv shell
 ```
 
-### 4. Миграции базы данных
+Вариант через venv:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install "Django>=5,<6" "pillow>=10" "psycopg[binary]"
+```
+
+### 3. PostgreSQL
+
+Одна команда поднимает базу в Docker:
+
+```bash
+make db-up
+```
+
+### 4. Настройки окружения
+
+```bash
+cp .env.example .env
+```
+
+Минимально важные переменные для Postgres:
+
+```env
+DJANGO_DB_ENGINE=postgres
+DJANGO_DB_NAME=portfolio
+DJANGO_DB_USER=postgres
+DJANGO_DB_PASSWORD=postgres
+DJANGO_DB_HOST=127.0.0.1
+DJANGO_DB_PORT=5444
+```
+
+### 5. Миграции и запуск
 
 ```bash
 python manage.py migrate
-```
-
-### 5. Создание суперпользователя (для входа в /admin)
-
-```bash
-python manage.py createsuperuser
-```
-
-### 6. Запуск дев-сервера
-
-```bash
 python manage.py runserver
 ```
 
-## Работа с контентом
+## Makefile команды
 
-Все данные (новости, проекты, достижения) управляются через Django Admin.
+```bash
+make run
+make test
+make check
+make migrate
+make db-up
+make db-down
+make db-logs
+```
 
-**Модели:**
+## Pre-commit
 
-- `News`
-  - `title` — заголовок новости
-  - `description` — текст новости
-  - `image` — изображение (`static/media/img/news/…`)
-- `Projects`
-  - `title` — заголовок проекта
-  - `description` — описание проекта
-  - `image` — изображение (`static/media/img/projects/…`)
-- `Achievments`
-  - `text` — строка с описанием достижения
+```bash
+pipenv run pre-commit install
+pipenv run pre-commit run --all-files
+```
 
+## Основные URL
+
+- Сайт: `http://127.0.0.1:8000/`
+- Админка: `http://127.0.0.1:8000/admin/`
+- Healthcheck: `http://127.0.0.1:8000/health/`
+- API root: `http://127.0.0.1:8000/api/`
+- API schema: `http://127.0.0.1:8000/api/schema/`
+- API docs: `http://127.0.0.1:8000/api/docs/`
+
+## API v1
+
+Поддерживает пагинацию: `?page=1&page_size=6`
+
+- `GET /api/v1/news/`
+- `GET /api/v1/news/<slug>/`
+- `GET /api/v1/projects/`
+- `GET /api/v1/projects/<slug>/`
+- `GET /api/v1/team/`
+- `GET /api/v1/achievements/`
+
+## Настройки (dev/prod)
+
+- Dev по умолчанию: `config.settings.dev`
+- Prod: `config.settings.prod`
+
+Пример запуска prod:
+
+```bash
+DJANGO_SETTINGS_MODULE=config.settings.prod python manage.py runserver
+```
+
+## Структура проекта
+
+- `config/` — системный слой (settings, urls, core, api)
+- `info/` — доменная логика (models, selectors, views, templates, tests)
+- `templates/` — системные шаблоны (`404.html`, `500.html`, `api_docs.html`)
+- `static/` — статика
+- `media/` — загруженные файлы

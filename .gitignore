@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+.env
+.env.*
+!.env.example
+*.bak
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+pip-wheel-metadata/

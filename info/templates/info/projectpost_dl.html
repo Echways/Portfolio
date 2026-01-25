@@ -1,0 +1,18 @@
+{% extends 'info/base.html' %}
+
+{% block title %}Детали проекта{% endblock title %}
+
+{% block content %}
+<article class="detail">
+    <header class="detail__body">
+        <h1 class="page-title ffca">{{ project.title }}</h1>
+        <p class="text-muted ffca">{{ project.created_at|date:"d.m.Y" }}</p>
+    </header>
+    <div class="detail__media">
+        <img src="{{ project.image.url }}" class="npimd" alt="{{ project.title }}">
+    </div>
+    <div class="detail__body">
+        <p class="ffca desc-d">{{ project.description }}</p>
+    </div>
+</article>
+{% endblock content %}

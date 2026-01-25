@@ -1,0 +1,45 @@
+{% extends 'info/base.html' %}
+{% load static %}
+
+{% block title %}Информация{% endblock title %}
+
+{% block content %}
+<header class="bios border-bottom">
+    {% for member in team_members %}
+        <div class="profile inline-block clearfix col">
+            <h2 class="mb1">{{ member.name }}</h2>
+            {% if member.skills %}
+                <p>{{ member.skills }}</p>
+            {% endif %}
+            <div class="clearfix w-a">
+                {% if member.telegram_url %}
+                    <a href="{{ member.telegram_url }}" target="_blank" rel="noopener noreferrer">
+                        <img class="pf-img valign-mid" src="{% static 'icons/tg.png' %}" alt="Telegram">
+                    </a>
+                {% endif %}
+                {% if member.instagram_url %}
+                    <a href="{{ member.instagram_url }}" target="_blank" rel="noopener noreferrer">
+                        <img class="pf-img valign-mid" src="{% static 'icons/inst.png' %}" alt="Instagram">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="profile inline-block clearfix col">
+            <h2 class="mb1">Добавьте участников</h2>
+            <p>Заполните раздел «Команда» в админке.</p>
+        </div>
+    {% endfor %}
+</header>
+
+<main class="container block p3">
+    <div class="clearfix mxn2 abuscont">
+        <div class="px2 txc">
+            <h3 class="mb2 ffca">Наши достижения</h3>
+            {% for achievement in object_list %}
+                <p class="ffca">{{ achievement.text }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock content %}

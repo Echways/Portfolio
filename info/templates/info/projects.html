@@ -1,0 +1,38 @@
+{% extends 'info/base.html' %}
+
+{% block title %}Проекты{% endblock title %}
+
+{% block content %}
+<section class="section">
+    <h1 class="page-title ffca">Проекты</h1>
+    <div class="grid">
+        {% for project in object_list %}
+            <article class="card newsunit">
+                <div class="card__image">
+                    <img src="{{ project.image.url }}" class="npimg" alt="{{ project.title }}">
+                </div>
+                <h2 class="ffca ttl">
+                    <a href="{% url 'info:project-detail' project.slug %}" class="txdc-n">{{ project.title }}</a>
+                </h2>
+                <p class="text-muted ffca">{{ project.created_at|date:"d.m.Y" }}</p>
+                <p class="ffca desc">{{ project.preview_text }}</p>
+            </article>
+        {% empty %}
+            <p class="ffca">Пока нет проектов.</p>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+        <nav class="pagination ffca" aria-label="Навигация по страницам">
+            {% if page_obj.has_previous %}
+                <a class="pagination__link" href="?page=1">Первая</a>
+                <a class="pagination__link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+            {% endif %}
+            <span class="pagination__current">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a class="pagination__link" href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+                <a class="pagination__link" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+            {% endif %}
+        </nav>
+    {% endif %}
+</section>
+{% endblock content %}

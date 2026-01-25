@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API Docs</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #f7f8fa; color: #0f172a; }
+        .wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 60px; }
+        h1 { margin: 0 0 12px; font-size: 36px; }
+        h2 { margin: 32px 0 12px; font-size: 22px; }
+        p { margin: 0 0 12px; line-height: 1.6; }
+        code { background: #0f172a; color: #e2e8f0; padding: 2px 8px; border-radius: 6px; }
+        .card { background: #fff; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 12px; padding: 20px; margin-top: 16px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06); }
+        ul { margin: 12px 0 0; padding-left: 18px; }
+        li { margin: 6px 0; }
+        a { color: #0ea5e9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Portfolio API</h1>
+        <p>Версия: <code>v1</code></p>
+        <p>Схема: <a href="/api/schema/"><code>/api/schema/</code></a></p>
+
+        <h2>Пагинация</h2>
+        <div class="card">
+            <p>Все списки поддерживают параметры:</p>
+            <ul>
+                <li><code>?page=1</code></li>
+                <li><code>?page_size=6</code></li>
+            </ul>
+        </div>
+
+        <h2>Эндпоинты</h2>
+        <div class="card">
+            <ul>
+                <li><a href="/api/v1/news/"><code>GET /api/v1/news/</code></a></li>
+                <li><code>GET /api/v1/news/&lt;slug&gt;/</code></li>
+                <li><a href="/api/v1/projects/"><code>GET /api/v1/projects/</code></a></li>
+                <li><code>GET /api/v1/projects/&lt;slug&gt;/</code></li>
+                <li><a href="/api/v1/team/"><code>GET /api/v1/team/</code></a></li>
+                <li><a href="/api/v1/achievements/"><code>GET /api/v1/achievements/</code></a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
